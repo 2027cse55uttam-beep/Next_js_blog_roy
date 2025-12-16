@@ -155,6 +155,8 @@ CORS_ALLOWED_ORIGINS = [
     # "https://my-blog-frontend.vercel.app", 
 ]
 
+CORS_ALLOW_ALL_ORIGINS = True
+
 # Agar Vercel link add karne me issue ho, toh temporary testing ke liye ye True kar sakte hain:
 # CORS_ALLOW_ALL_ORIGINS = True 
 
