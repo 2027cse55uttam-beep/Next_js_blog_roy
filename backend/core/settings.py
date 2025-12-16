@@ -27,6 +27,8 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'cloudinary_storage', # Cloudinary Storage
+    'cloudinary',         # Cloudinary Library
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -138,26 +140,32 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # ==========================================
-# MEDIA FILES
+# MEDIA FILES (CLOUDINARY CONFIGURATION)
 # ==========================================
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
+
+# Media Files (Images) ab Cloudinary par jayengi
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # ==========================================
-# CORS SETTINGS
+# CORS SETTINGS (SECURE)
 # ==========================================
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    # IMPORTANT: Jab Vercel deploy ho jaye, uska link yahan niche add karein
-    # "https://my-blog-frontend.vercel.app", 
+    "http://localhost:3000",                  # Local Development ke liye
+    "https://next-js-blog-roy.vercel.app",    # Aapka Live Vercel Domain
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
-
-# Agar Vercel link add karne me issue ho, toh temporary testing ke liye ye True kar sakte hain:
-# CORS_ALLOW_ALL_ORIGINS = True 
+# Security ke liye isse ab hata diya gaya hai (False)
+CORS_ALLOW_ALL_ORIGINS = False 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
