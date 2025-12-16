@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# exit on error
+# Exit on error
 set -o errexit
 
-# Dependencies install karo
+# 1. Install Dependencies
 pip install -r requirements.txt
 
-# Static files collect karo
-python manage.py collectstatic --noinput
+# 2. Collect Static Files (CSS/Images)
+python manage.py collectstatic --no-input
 
-# Database migrate karo
+# 3. Migrate Database
 python manage.py migrate
