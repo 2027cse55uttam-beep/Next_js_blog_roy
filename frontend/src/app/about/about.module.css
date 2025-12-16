@@ -1,0 +1,280 @@
+/* --- GLOBAL --- */
+.container {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+  background-color: #ffffff;
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding: 6rem 2rem;
+  }
+}
+
+/* --- HEADER --- */
+.header {
+  text-align: center;
+  max-width: 48rem;
+  margin: 0 auto 4rem;
+}
+
+.headerBadge {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #4f46e5;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.headerTitle {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 640px) {
+  .headerTitle {
+    font-size: 3rem;
+  }
+}
+
+.headerDesc {
+  font-size: 1.125rem;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+/* --- TIMELINE --- */
+.timeline {
+  position: relative;
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.timelineLine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 28px;
+  width: 2px;
+  background-color: #d1d5db;
+}
+
+@media (min-width: 1024px) {
+  .timelineLine {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.timelineItem {
+  position: relative;
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 1024px) {
+  .timelineItem {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .timelineItem:nth-child(even) .timelineContent {
+    grid-column: 2;
+    text-align: left;
+  }
+
+  .timelineItem:nth-child(odd) .timelineContent {
+    grid-column: 1;
+    text-align: right;
+  }
+  
+  /* Reverse order for odd items so content is on left */
+  .timelineItem:nth-child(odd) {
+    direction: rtl; 
+  }
+  .timelineItem:nth-child(odd) .timelineContent {
+    direction: ltr;
+  }
+}
+
+.timelineContent {
+  position: relative;
+  padding-left: 4rem;
+}
+
+@media (min-width: 1024px) {
+  .timelineContent {
+    padding-left: 0;
+  }
+}
+
+.timelineNumber {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 3.5rem;
+  width: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: #eef2ff;
+  color: #4f46e5;
+  font-weight: 700;
+  font-size: 1.25rem;
+  z-index: 10;
+  border: 4px solid #fff;
+}
+
+@media (min-width: 1024px) {
+  .timelineNumber {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.timelineTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.timelineDesc {
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+/* --- TEAM SECTION --- */
+.teamSection {
+  margin-top: 6rem;
+}
+
+.teamHeader {
+  text-align: center;
+  max-width: 48rem;
+  margin: 0 auto 3rem;
+}
+
+.teamTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1rem;
+}
+
+.teamDesc {
+  color: #4b5563;
+  font-size: 1.125rem;
+}
+
+.teamGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+
+@media (min-width: 640px) {
+  .teamGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .teamGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.teamMember {
+  text-align: center;
+}
+
+.memberImageWrapper {
+  width: 10rem;
+  height: 10rem;
+  margin: 0 auto 1.5rem;
+  border-radius: 9999px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.memberImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.memberName {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.25rem;
+}
+
+.memberRole {
+  color: #4f46e5;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.memberBio {
+  font-size: 0.875rem;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+/* --- CTA SECTION --- */
+.ctaSection {
+  margin-top: 6rem;
+  text-align: center;
+  padding: 3rem;
+  background: #f9fafb;
+  border-radius: 1rem;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  background: white;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  border: 1px solid #e5e7eb;
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin-bottom: 2rem;
+}
+
+.statusDot {
+  height: 0.5rem;
+  width: 0.5rem;
+  background: #22c55e;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.ctaButton {
+  display: inline-block;
+  background: #4f46e5;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.ctaButton:hover {
+  background: #4338ca;
+}
+
+.ctaNote {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
