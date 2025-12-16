@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, Calendar, Clock, Share2, Heart, MessageCircle } from "lucide-react";
-import styles from "./blogPost.module.css";
+import styles from "./[slug]/blogPost.module.css";
 import DOMPurify from "isomorphic-dompurify"; // SECURITY FIX
 
 // DEPLOYMENT FIX: Environment variable for API URL
