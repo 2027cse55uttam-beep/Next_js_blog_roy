@@ -6,21 +6,23 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
+# ==========================================
+# SECURITY SETTINGS
+# ==========================================
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# CHANGE: Ab secret key environment variable se aayegi. Local ke liye fallback hai.
+# SECRET_KEY environment variable se aayega. Local ke liye fallback hai.
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-fallback-key-for-local-dev-only')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-# CHANGE: Render par automatically False ho jayega
+# Render par automatically False ho jayega, Local par True rahega
 DEBUG = 'RENDER' not in os.environ
 
+# Sabhi domains ko allow karein (Render ke liye zaroori hai)
 ALLOWED_HOSTS = ['*']
 
 
-# Application definition
+# ==========================================
+# APPLICATIONS
+# ==========================================
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -38,9 +40,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware', # Sabse upar hona chahiye
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', # <--- CHANGE: Ye line zaroori hai static files ke liye
+    'whitenoise.middleware.WhiteNoiseMiddleware', # Security ke baad static files
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -69,20 +71,32 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+# ==========================================
+# DATABASE CONFIGURATION (Bulletproof Fix)
+# ==========================================
 
-# CHANGE: Live server par Postgres use hoga, Local par SQLite
+# Step 1: Default Local Database (SQLite) set karein
 DATABASES = {
-    'default': dj_database_url.config(
-        default='sqlite:///db.sqlite3',
-        conn_max_age=600
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
+# Step 2: Agar Render par DATABASE_URL mile, toh Postgres use karein
+database_url = os.environ.get("DATABASE_URL")
 
-# Password validation
-# https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
+if database_url:
+    DATABASES['default'] = dj_database_url.parse(
+        database_url,
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
+
+
+# ==========================================
+# PASSWORD VALIDATION
+# ==========================================
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -100,39 +114,48 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/6.0/topics/i18n/
+# ==========================================
+# INTERNATIONALIZATION
+# ==========================================
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/6.0/howto/static-files/
+# ==========================================
+# STATIC FILES (CSS, JavaScript, Images)
+# ==========================================
 
 STATIC_URL = '/static/'
 
-# CHANGE: Production ke liye static root aur storage
+# Production ke liye static root location
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# WhiteNoise storage engine
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
-# Media files (User uploaded images)
-# Note: Render free tier par images delete ho jayengi restart hone par
+# ==========================================
+# MEDIA FILES
+# ==========================================
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-# CORS Settings
+# ==========================================
+# CORS SETTINGS
+# ==========================================
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    # Jab Vercel deploy ho jaye, uska link yahan add karna mat bhoolna
-    # e.g., "https://my-blog-frontend.vercel.app", 
+    # IMPORTANT: Jab Vercel deploy ho jaye, uska link yahan niche add karein
+    # "https://my-blog-frontend.vercel.app", 
 ]
+
+# Agar Vercel link add karne me issue ho, toh temporary testing ke liye ye True kar sakte hain:
+# CORS_ALLOW_ALL_ORIGINS = True 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
