@@ -1,10 +1,9 @@
-
 import NextTopLoader from 'nextjs-toploader';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google'; // Google Font Optimization
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import ScrollToTop from './components/ScrollToTop'; // Make sure this component has 'use client'
+import ScrollToTop from './components/ScrollToTop';
 import "./globals.css";
 
 // Font Configuration (Automatic Optimization)
@@ -15,31 +14,45 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  // ✅ IMPORTANT: Yahan apna Vercel URL dalein (Isse images aur links fix rahenge)
+  metadataBase: new URL('https://next-js-blog-roy.vercel.app'),
+
   title: {
     default: 'My Awesome Blog',
     template: '%s | My Awesome Blog',
   },
   description: 'Discover insightful articles, tutorials, and stories on technology, coding, and lifestyle.',
   keywords: ['Next.js', 'React', 'Blog', 'Tech', 'Coding'],
-  authors: [{ name: 'Your Name' }],
-  creator: 'Your Name',
+  authors: [{ name: 'Uttam Roy' }], // Aap apna naam yahan likh sakte hain
+  creator: 'Uttam Roy',
+  
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://yourdomain.com',
+    // ✅ URL Update kiya gaya hai
+    url: 'https://next-js-blog-roy.vercel.app',
     title: 'My Awesome Blog',
     description: 'Discover insightful articles, tutorials, and stories.',
     siteName: 'My Awesome Blog',
   },
+  
   twitter: {
     card: 'summary_large_image',
     title: 'My Awesome Blog',
-    creator: '@yourusername',
+    // Agar aapka twitter handle hai toh yahan likhein, warn hata dein
+    // creator: '@yourusername', 
   },
+  
   robots: {
     index: true,
     follow: true,
   },
+
+  // ✅ Agar aap Public folder se Favicon use kar rahe hain, toh ye uncomment karein:
+  icons: {
+    icon: '/favicon.ico',
+  },
+
 };
 
 export default function RootLayout({
