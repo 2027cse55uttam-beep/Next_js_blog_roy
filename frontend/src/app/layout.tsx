@@ -50,7 +50,7 @@ export const metadata: Metadata = {
 
   // ✅ Agar aap Public folder se Favicon use kar rahe hain, toh ye uncomment karein:
   icons: {
-    icon: '/favicon.ico',
+    icon: '/favicon.png',
   },
 
 };
