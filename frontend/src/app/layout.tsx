@@ -1,46 +1,50 @@
 import NextTopLoader from 'nextjs-toploader';
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google'; // Google Font Optimization
+import type { Metadata, Viewport } from 'next'; // Added Viewport for better mobile control
+import { Inter } from 'next/font/google'; 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import "./globals.css";
 
-// Font Configuration (Automatic Optimization)
+// 1. Font Configuration (Optimized)
 const inter = Inter({ 
   subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap',
 });
 
+// 2. Viewport Settings (Fixes "Narrow" issues on mobile)
+export const viewport: Viewport = {
+  themeColor: '#2563eb',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1, // Prevents zooming issues on inputs
+};
+
 export const metadata: Metadata = {
-  // ✅ IMPORTANT: Yahan apna Vercel URL dalein (Isse images aur links fix rahenge)
   metadataBase: new URL('https://next-js-blog-roy.vercel.app'),
 
   title: {
     default: 'My Awesome Blog',
     template: '%s | My Awesome Blog',
   },
-  description: 'Discover insightful articles, tutorials, and stories on technology, coding, and lifestyle.',
-  keywords: ['Next.js', 'React', 'Blog', 'Tech', 'Coding'],
-  authors: [{ name: 'Uttam Roy' }], // Aap apna naam yahan likh sakte hain
+  description: 'Discover world-class articles on coding, design, and technology.',
+  keywords: ['Next.js', 'React', 'Blog', 'Tech', 'Coding', 'Web Development'],
+  authors: [{ name: 'Uttam Roy' }],
   creator: 'Uttam Roy',
   
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    // ✅ URL Update kiya gaya hai
     url: 'https://next-js-blog-roy.vercel.app',
     title: 'My Awesome Blog',
-    description: 'Discover insightful articles, tutorials, and stories.',
+    description: 'Discover world-class articles on coding, design, and technology.',
     siteName: 'My Awesome Blog',
   },
   
   twitter: {
     card: 'summary_large_image',
     title: 'My Awesome Blog',
-    // Agar aapka twitter handle hai toh yahan likhein, warn hata dein
-    // creator: '@yourusername', 
   },
   
   robots: {
@@ -48,11 +52,9 @@ export const metadata: Metadata = {
     follow: true,
   },
 
-  // ✅ Agar aap Public folder se Favicon use kar rahe hain, toh ye uncomment karein:
   icons: {
-    icon: '/favicon.png',
+    icon: '/favicon.png', // Ensure this file exists in public folder
   },
-
 };
 
 export default function RootLayout({
@@ -62,24 +64,42 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`scroll-smooth ${inter.variable}`}>
-      <body className={`antialiased bg-gray-50 text-gray-900 ${inter.className}`}>
-      <NextTopLoader color="#2563eb" showSpinner={false} />
+      <body className={`
+        antialiased 
+        bg-slate-50 
+        text-slate-900 
+        selection:bg-blue-600 selection:text-white 
+        overflow-x-hidden
+        ${inter.className}
+      `}>
+        
+        {/* Loading Bar at Top */}
+        <NextTopLoader 
+          color="#2563eb" 
+          height={3} 
+          showSpinner={false} 
+          shadow="0 0 10px #2563eb,0 0 5px #2563eb"
+        />
         
         {/* Accessibility Skip Link */}
         <a 
           href="#main-content" 
-          className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-blue-600 focus:text-white focus:top-4 focus:left-4 focus:rounded-lg focus:shadow-lg transition-all"
+          className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:p-4 focus:bg-blue-600 focus:text-white focus:top-4 focus:left-4 focus:rounded-lg focus:shadow-lg transition-all"
         >
           Skip to main content
         </a>
 
-        <div className="flex flex-col min-h-screen">
-          <Navbar />
+        <div className="flex flex-col min-h-screen relative">
+          
+          {/* Navbar wrapper ensures it stays on top */}
+          <div className="relative z-40">
+            <Navbar />
+          </div>
 
           {/* Main Content Area */}
           <main 
             id="main-content" 
-            className="flex-grow pt-16 md:pt-20" // Padding for fixed navbar
+            className="flex-grow pt-16 md:pt-20 relative z-10" 
           >
             {children}
           </main>
@@ -87,8 +107,10 @@ export default function RootLayout({
           <Footer />
         </div>
 
-        {/* Client Side Components */}
-        <ScrollToTop />
+        {/* Scroll To Top Arrow (High Z-Index to show above blobs) */}
+        <div className="relative z-50">
+          <ScrollToTop />
+        </div>
         
       </body>
     </html>
