@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { Facebook, Twitter, Instagram, Youtube, Github, Linkedin } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Youtube, Linkedin } from 'lucide-react';
 import styles from './footer.module.css';
 
 export default function Footer() {
@@ -10,17 +10,16 @@ export default function Footer() {
   const footerRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
-  // Scroll Detection for "Pop" Animation
+  // Scroll Detection for Smooth Pop Animation
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // Trigger animation when 20% of footer is visible
         if (entry.isIntersecting) {
           setIsVisible(true);
-          observer.disconnect(); // Run only once
+          observer.disconnect();
         }
       },
-      { threshold: 0.2 } 
+      { threshold: 0.15 }
     );
 
     if (footerRef.current) {
@@ -33,10 +32,10 @@ export default function Footer() {
   return (
     <footer 
       ref={footerRef} 
-      className={`${styles.footer} ${isVisible ? styles.visible : styles.hidden}`}
+      className={`${styles.footer} ${isVisible ? styles.visible : ''}`}
     >
       
-      {/* 1. Social Icons (Top Center) */}
+      {/* Social Icons */}
       <div className={styles.socialWrapper}>
         <a href="#" className={styles.socialIcon} aria-label="Facebook">
           <Facebook size={24} />
@@ -55,7 +54,7 @@ export default function Footer() {
         </a>
       </div>
 
-      {/* 2. Blog Categories (Replacing "Personal Projects") */}
+      {/* Blog Categories */}
       <h3 className={styles.sectionTitle}>Explore Topics:</h3>
       
       <div className={styles.tagsWrapper}>
@@ -73,7 +72,7 @@ export default function Footer() {
         </Link>
       </div>
 
-      {/* 3. Branding & Copyright (Bottom) */}
+      {/* Branding & Copyright */}
       <h2 className={styles.brandName}>My Awesome Blog</h2>
       <p className={styles.copyright}>
         Copyright © {currentYear} My Awesome Blog. <br />
